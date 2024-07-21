@@ -1,0 +1,42 @@
+{% extends 'info/base.html' %}
+{% block content %}
+
+<form action="{% url 'marks_confirm' mc.id %}" method="post">
+            {% csrf_token %}
+    <div class="card mb-3">
+        <div class="card-header">
+          <i class="fas fa-table"></i>
+         <b></b></div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead class="thead-light ">
+                <tr>
+                    <th>Roll No.</th>
+                    <th>Student Name</th>
+                    <th>Total Marks</th>
+                    <th>Enter Marks</th>
+                </tr>
+              </thead>
+                <tbody>
+                    {% for m in m_list|dictsort:"studentcourse.student.USN" %}
+                    <tr>
+                    <td>{{m.studentcourse.student.USN}}</td>
+                    <td>{{m.studentcourse.student.name}}</td>
+                    <td>{{ m.total_marks }}</td>
+                    <td>
+                        <input type="number" name="{{ m.studentcourse.student.USN }}" min="0" max="{{ m.total_marks }}" value="{{ m.marks1 }}">
+                    </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+    <input class="btn btn-success" type="submit" value="Submit">
+</form>
+
+{% endblock %}
